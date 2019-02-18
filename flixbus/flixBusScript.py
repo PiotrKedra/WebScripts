@@ -5,7 +5,7 @@ import urllib.request
 import time
 from bs4 import BeautifulSoup
 
-from first.connectionBuilder import ConnectionBuilder
+from flixbus.connectionBuilder import ConnectionBuilder
 
 url = "https://shop.flixbus.pl/search?departureCity=1314&arrivalCity=1915&route=Arnhem-Krak%C3%B3w&rideDate=24.02.2019&adult=1&"
 
