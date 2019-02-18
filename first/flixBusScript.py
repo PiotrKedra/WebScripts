@@ -20,6 +20,9 @@ soup = BeautifulSoup(html, 'html.parser')
 
 
 
+
+
+# 'departure'
 # aux-id-interconnection
 
 for link in soup.find_all('div'):
@@ -31,9 +34,11 @@ for link in soup.find_all('div'):
             search = re.search(r'aux-id-interconnection', clas)
 
             if search:
-                print(clas)
-                print(link)
-                print("DASDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                #print(clas)
+                #print(link)
+                #print("DASDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                #print(get_tag_text(str(link)))
+                print("asdddddddddddddddddddddddddddddddddddddddddddd")
     except:
         continue
 
@@ -42,7 +47,5 @@ for link in soup.find_all('div'):
 # search?q=dupa&
 
 
-def departure_time(div: str):
-    flix_class_name = 'departure'
 
-    
+
