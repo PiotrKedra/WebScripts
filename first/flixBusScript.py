@@ -5,10 +5,12 @@ import urllib.request
 import time
 from bs4 import BeautifulSoup
 
+from first.connectionBuilder import ConnectionBuilder
 
-url = "https://shop.flixbus.pl/search?departureCity=1314&arrivalCity=1915&route=Arnhem-Kraków&rideDate=24.02.2019&adult=1&"
+url = "https://shop.flixbus.pl/search?departureCity=1314&arrivalCity=1915&route=Arnhem-Krak%C3%B3w&rideDate=24.02.2019&adult=1&"
+
 r = requests.get(url)
-
+print("DUDPA{A")
 html = r.text
 
 
@@ -25,27 +27,34 @@ soup = BeautifulSoup(html, 'html.parser')
 # 'departure'
 # aux-id-interconnection
 
-for link in soup.find_all('div'):
+div_r = soup.find('div', id='results-group-container-direct')
+if div_r:
+    for div in div_r.findAll('div'):
+        try:
+            classes = div['class']
 
-    try:
-        classes = link['class']
+            for clas in classes:
 
-        for clas in classes:
-            search = re.search(r'aux-id-interconnection', clas)
+                search = re.search(r'aux-id-interconnection', clas)
 
-            if search:
-                #print(clas)
-                #print(link)
-                #print("DASDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-                #print(get_tag_text(str(link)))
-                print("asdddddddddddddddddddddddddddddddddddddddddddd")
-    except:
-        continue
+                if search:
+                    connection = ConnectionBuilder(str(div))
+                    connection.set_departure_time()
+                    connection.set_arrival_time()
+                    connection.set_departure_station()
+                    connection.set_arrival_station()
+                    connection.set_duration()
+                    connection.set_price()
+                    connection.set_bus_transfer()
+                    aa = connection.build()
 
+                    print(aa)
+
+        except:
+            continue
 
 
 # search?q=dupa&
-
-
+#results-group-container-direct
 
 

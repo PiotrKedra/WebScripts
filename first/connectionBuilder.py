@@ -1,4 +1,4 @@
-from typing import Any
+import re
 
 from bs4 import BeautifulSoup
 
@@ -22,38 +22,45 @@ class ConnectionBuilder:
         self.arrival_time_class = 'arrival'
         self.departure_station_class = 'departure-station-name'
         self.arrival_station_class = 'arrival-station-name'
-        self.duration_class = 'duration'  #  ride__duration ride__duration-messages
+        self.duration_class = 'duration'
         self.bus_transfers_class = 'transf-num'
         self.price_class = 'total'
 
     def set_departure_time(self):
-        self.departure_time = self.get_tag_text(self.departure_time_class)
-        return self
+        self.departure_time = self.get_div_text(self.departure_time_class)
 
     def set_arrival_time(self):
-        self.arrival_time = self.get_tag_text(self.arrival_time_class)
-        return self
+        self.arrival_time = self.get_div_text(self.arrival_time_class)
 
     def set_departure_station(self):
-        self.departure_station = self.get_tag_text(self.departure_station_class)
-        return self
+        self.departure_station = self.get_div_text(self.departure_station_class)
 
     def set_arrival_station(self):
-        self.arrival_station = self.get_tag_text(self.arrival_station_class)
-        return self
+        self.arrival_station = self.get_div_text(self.arrival_station_class)
 
     def set_duration(self):
-        self.duration = self.get_tag_text(self.duration_class)
-        return self
+        self.duration = self.get_div_text(self.duration_class)
 
     def set_price(self):
-        self.price = self.get_tag_text(self.price_class)
-        return self
+        self.price = self.get_div_text(self.price_class)[0:9]
 
-    def get_tag_text(self, class_name: str):
+    def set_bus_transfer(self):
+        soup = BeautifulSoup(self.div, 'html.parser')
+        tag = soup.find('div', class_=self.bus_transfers_class)
+        self.bus_transfers = tag.find('span', class_='num').text
+        self.bus_transfers_message = re.sub(r'( +)|(\n)', ' ', tag.find('span', class_='has-popup').text)
+
+    def build(self):
+        return f'Departure time: {self.departure_time} -- from {self.departure_station} \n' \
+               f'Arrival time: {self.arrival_time} -- to {self.arrival_station} \n' \
+               f'Duration: {self.duration} \n' \
+               f'Price: {self.price} \n' \
+               f'Transfers: {self.bus_transfers} --> Transfer message: {self.bus_transfers_message}'
+
+    def get_div_text(self, class_name: str):
         soup = BeautifulSoup(self.div, 'html.parser')
         tag = soup.find('div', class_=class_name)
-        if tag:
-            return tag.string
+        if tag.text:
+            return tag.text.lstrip()
         else:
-            raise Exception
+            return f'Sth went wrong with: {class_name}'
