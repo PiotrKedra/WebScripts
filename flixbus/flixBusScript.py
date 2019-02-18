@@ -7,22 +7,17 @@ from bs4 import BeautifulSoup
 
 from flixbus.connectionBuilder import ConnectionBuilder
 
-url = "https://shop.flixbus.pl/search?departureCity=1314&arrivalCity=1915&route=Arnhem-Krak%C3%B3w&rideDate=24.02.2019&adult=1&"
+url = "https://shop.flixbus.pl/search?departureCity=1334&arrivalCity=1915&route=Amsterdam-Kraków&rideDate=24.02.2019&adult=1&"
 
 r = requests.get(url)
 print("DUDPA{A")
 html = r.text
 
-
-#print(r.text)
+# print(r.text)
 
 print("DUPA #################")
 
 soup = BeautifulSoup(html, 'html.parser')
-
-
-
-
 
 # 'departure'
 # aux-id-interconnection
@@ -36,6 +31,8 @@ if div_r:
             for clas in classes:
 
                 search = re.search(r'aux-id-interconnection', clas)
+
+                # todo aux-id-direct does not work
 
                 if search:
                     connection = ConnectionBuilder(str(div))
@@ -53,8 +50,5 @@ if div_r:
         except:
             continue
 
-
 # search?q=dupa&
-#results-group-container-direct
-
-
+# results-group-container-direct
