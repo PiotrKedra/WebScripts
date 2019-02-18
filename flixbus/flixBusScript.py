@@ -7,10 +7,11 @@ from bs4 import BeautifulSoup
 
 from flixbus.connectionBuilder import ConnectionBuilder
 
-url = "https://shop.flixbus.pl/search?departureCity=1334&arrivalCity=1915&route=Amsterdam-Kraków&rideDate=24.02.2019&adult=1&"
+ride_data = '24.02.2019'
+
+url = f'https://shop.flixbus.pl/search?departureCity=1334&arrivalCity=1915&route=Amsterdam-Kraków&rideDate={ride_data}&adult=1&'
 
 r = requests.get(url)
-print("DUDPA{A")
 html = r.text
 
 # print(r.text)
@@ -32,17 +33,13 @@ if div_r:
 
                 search = re.search(r'aux-id-interconnection', clas)
 
-                # todo aux-id-direct does not work
+                search2 = re.search(r'aux-id-direct', clas)
 
-                if search:
-                    connection = ConnectionBuilder(str(div))
-                    connection.set_departure_time()
-                    connection.set_arrival_time()
-                    connection.set_departure_station()
-                    connection.set_arrival_station()
-                    connection.set_duration()
-                    connection.set_price()
-                    connection.set_bus_transfer()
+                # todo aux-id-direct does not work
+                # todo add data from html, not from args
+
+                if search2:
+                    connection = ConnectionBuilder(str(div), ride_data)
                     aa = connection.build()
 
                     print(aa)

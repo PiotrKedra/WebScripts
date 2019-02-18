@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 class ConnectionBuilder:
 
-    def __init__(self, div: str):
+    def __init__(self, div: str, ride_data: str):
         self.departure_time = None
         self.arrival_time = None
         self.departure_station = None
@@ -14,6 +14,7 @@ class ConnectionBuilder:
         self.bus_transfers = None
         self.bus_transfers_message = None
         self.price = None
+        self.ride_date = ride_data
 
         self.div = div
 
@@ -51,7 +52,18 @@ class ConnectionBuilder:
         self.bus_transfers_message = re.sub(r'( +)|(\n)', ' ', tag.find('span', class_='has-popup').text)
 
     def build(self):
-        return f'Departure time: {self.departure_time} -- from {self.departure_station} \n' \
+        self.set_departure_time()
+        self.set_arrival_time()
+        self.set_departure_station()
+        self.set_arrival_station()
+        self.set_duration()
+        self.set_price()
+        self.set_bus_transfer()
+        return str(self)
+
+    def __str__(self) -> str:
+        return f'Ride data: {self.ride_date} \n' \
+               f'Departure time: {self.departure_time} -- from {self.departure_station} \n' \
                f'Arrival time: {self.arrival_time} -- to {self.arrival_station} \n' \
                f'Duration: {self.duration} \n' \
                f'Price: {self.price} \n' \
