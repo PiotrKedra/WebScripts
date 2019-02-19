@@ -43,7 +43,7 @@ class ConnectionBuilder:
         self.duration = self.get_div_text(self.duration_class)
 
     def set_price(self):
-        self.price = self.get_div_text(self.price_class)[0:9]
+        self.price = self.get_div_text(self.price_class)[0:7]
 
     def set_bus_transfer(self):
         soup = BeautifulSoup(self.div, 'html.parser')

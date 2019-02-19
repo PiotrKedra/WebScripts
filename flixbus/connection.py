@@ -1,0 +1,23 @@
+import re
+
+from flixbus.connectionBuilder import ConnectionBuilder
+
+
+class Connection:
+    def __init__(self, builder: ConnectionBuilder):
+        self.departure_time = builder.departure_time
+        self.arrival_time = builder.arrival_time
+        self.departure_station = builder.departure_station
+        self.arrival_station = builder.departure_station
+        self.duration = builder.duration
+        self.bus_transfers = builder.bus_transfers
+        self.bus_transfers_message = builder.bus_transfers_message
+        self.price = builder.price
+        self.ride_date = builder.ride_date
+
+    def get_price(self) -> float:
+        return float(re.sub(r',', '.', self.price))
+
+    def get_bus_transfers(self) -> int:
+        return int(self.bus_transfers)
+

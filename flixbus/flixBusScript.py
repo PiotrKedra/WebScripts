@@ -38,7 +38,7 @@ if div_r:
                 # todo aux-id-direct does not work
                 # todo add data from html, not from args
 
-                if search2:
+                if search:
                     connection = ConnectionBuilder(str(div), ride_data)
                     aa = connection.build()
 
