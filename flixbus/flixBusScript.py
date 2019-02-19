@@ -15,10 +15,6 @@ url = f'https://shop.flixbus.pl/search?departureCity=1334&arrivalCity=1915&route
 r = requests.get(url)
 html = r.text
 
-# print(r.text)
-
-print("DUPA #################")
-
 soup = BeautifulSoup(html, 'html.parser')
 
 # 'departure'
