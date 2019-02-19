@@ -48,8 +48,13 @@ class ConnectionBuilder:
     def set_bus_transfer(self):
         soup = BeautifulSoup(self.div, 'html.parser')
         tag = soup.find('div', class_=self.bus_transfers_class)
-        self.bus_transfers = tag.find('span', class_='num').text
-        self.bus_transfers_message = re.sub(r'( +)|(\n)', ' ', tag.find('span', class_='has-popup').text)
+        transfer_tag = tag.find('span', class_='num')
+        if transfer_tag is None:
+            self.bus_transfers = 0
+            self.bus_transfers_message = 'Brak'
+        else:
+            self.bus_transfers = transfer_tag.text
+            self.bus_transfers_message = re.sub(r'( +)|(\n)', ' ', tag.find('span', class_='has-popup').text)
 
     def build(self):
         self.set_departure_time()
@@ -59,15 +64,7 @@ class ConnectionBuilder:
         self.set_duration()
         self.set_price()
         self.set_bus_transfer()
-        return str(self)
-
-    def __str__(self) -> str:
-        return f'Ride data: {self.ride_date} \n' \
-               f'Departure time: {self.departure_time} -- from {self.departure_station} \n' \
-               f'Arrival time: {self.arrival_time} -- to {self.arrival_station} \n' \
-               f'Duration: {self.duration} \n' \
-               f'Price: {self.price} \n' \
-               f'Transfers: {self.bus_transfers} --> Transfer message: {self.bus_transfers_message}'
+        return self
 
     def get_div_text(self, class_name: str):
         soup = BeautifulSoup(self.div, 'html.parser')

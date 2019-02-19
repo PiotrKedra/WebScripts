@@ -21,3 +21,11 @@ class Connection:
     def get_bus_transfers(self) -> int:
         return int(self.bus_transfers)
 
+    def __str__(self) -> str:
+        return f'Ride data: {self.ride_date} \n' \
+               f'Departure time: {self.departure_time} -- from {self.departure_station} \n' \
+               f'Arrival time: {self.arrival_time} -- to {self.arrival_station} \n' \
+               f'Duration: {self.duration} \n' \
+               f'Price: {self.price} \n' \
+               f'Transfers: {self.bus_transfers} --> Transfer message: {self.bus_transfers_message}'
+

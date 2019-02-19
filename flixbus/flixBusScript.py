@@ -5,6 +5,7 @@ import urllib.request
 import time
 from bs4 import BeautifulSoup
 
+from flixbus.connection import Connection
 from flixbus.connectionBuilder import ConnectionBuilder
 
 ride_data = '24.02.2019'
@@ -35,16 +36,14 @@ if div_r:
 
                 search2 = re.search(r'aux-id-direct', clas)
 
-                # todo aux-id-direct does not work
+
                 # todo add data from html, not from args
 
-                if search:
-                    connection = ConnectionBuilder(str(div), ride_data)
-                    aa = connection.build()
-
+                if search2 or search:
+                    connection = Connection(ConnectionBuilder(str(div), ride_data).build())
+                    aa = connection
                     print(aa)
-
-        except:
+        except Exception as e:
             continue
 
 # search?q=dupa&
