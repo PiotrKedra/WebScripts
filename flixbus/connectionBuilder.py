@@ -73,3 +73,16 @@ class ConnectionBuilder:
             return tag.text.lstrip()
         else:
             return f'Sth went wrong with: {class_name}'
+
+
+html = '<html>' \
+       '<div class="1"></div>' \
+       '<div class="2"></div>' \
+       '<div class="3"></div>' \
+       '<div class="4"></div>' \
+       '</html>'
+
+soup = BeautifulSoup(html, 'html.parser')
+
+for ele in soup.find('html').children:
+    print(ele)

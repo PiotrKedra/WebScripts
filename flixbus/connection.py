@@ -8,7 +8,7 @@ class Connection:
         self.departure_time = builder.departure_time
         self.arrival_time = builder.arrival_time
         self.departure_station = builder.departure_station
-        self.arrival_station = builder.departure_station
+        self.arrival_station = builder.arrival_station
         self.duration = builder.duration
         self.bus_transfers = builder.bus_transfers
         self.bus_transfers_message = builder.bus_transfers_message
@@ -28,4 +28,3 @@ class Connection:
                f'Duration: {self.duration} \n' \
                f'Price: {self.price} \n' \
                f'Transfers: {self.bus_transfers} --> Transfer message: {self.bus_transfers_message}'
-
