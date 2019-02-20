@@ -15,7 +15,7 @@ class ConnectionManager:
         'Arnhem': 1314,
     }
 
-    def find_forward(self, departure_station: str, arrival_station: str, days_forward=30):
+    def find_forward(self, departure_station: str, arrival_station: str, days_forward=30, price=190.0):
         tmp_date = datetime.datetime.now()
         dates = [self.convert_date(tmp_date)]
         for i in range(0, days_forward):
@@ -28,7 +28,7 @@ class ConnectionManager:
 
         good_connections = []
         for connection in connections:
-            if connection.get_price() >= 190.0:
+            if connection.get_price() >= price:
                 print(f'Removed: {connection.get_price()}')
             else:
                 good_connections.append(connection)
