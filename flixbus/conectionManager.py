@@ -15,10 +15,10 @@ class ConnectionManager:
         'Arnhem': 1314,
     }
 
-    def find_cheapest_in_30_days(self, departure_station: str, arrival_station: str):
+    def find_forward(self, departure_station: str, arrival_station: str, days_forward=30):
         tmp_date = datetime.datetime.now()
         dates = [self.convert_date(tmp_date)]
-        for i in range(0, 30):
+        for i in range(0, days_forward):
             tmp_date = tmp_date + datetime.timedelta(days=1)
             dates.append(self.convert_date(tmp_date))
 
