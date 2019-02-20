@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 from flixbus.connection import Connection
 from flixbus.connectionBuilder import ConnectionBuilder
 
-ride_data = '24.02.2019'
+ride_data = ' '
 
 url = f'https://shop.flixbus.pl/search?departureCity=1314&arrivalCity=1915&route=Arnhem-Kraków&rideDate={ride_data}&adult=1&'
 
@@ -37,10 +37,8 @@ if div_r:
                 connection = Connection(ConnectionBuilder(str(div), ride_data).build())
                 aa = connection
                 print(aa)
-                print(classes)
             else:
-                print(div)
-                #break
+                break
         except Exception as e:
             print(e)
 
